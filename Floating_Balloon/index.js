@@ -51,7 +51,7 @@ function init() {
 
           // create the animation loop every 5ms
           // this sets the frame rate of your game
-          var animateInterval = setInterval(animate, 10);
+          var animateInterval = setInterval(animate, 1);
           
           function animate() {
               if(playerLeft === true) {
@@ -99,7 +99,7 @@ function collision(balloon, aDIV) {
 //     console.log(collision($('#balloon'), burst.each));
 // }, 200);
 
-var burst = [$('#pauls'), $('#tall'), $('#wharf')];
+var burst =  [ $('#tall'), $('#wharf'), $('#pauls'), $('#pickle'), $('#pickle2'), $('#tower'), $('#eye'), $('#bridgeL'), $('#bridgeR'), $('#parliament'), $('#parliament2'), $('#parliament3'), $('#bb'), $('#shard'), $('#shard2')];
 
 window.setInterval(function() {
       $(burst).each(function(index, element) {
