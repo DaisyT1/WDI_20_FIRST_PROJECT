@@ -33,7 +33,7 @@ h1 {
 #balloon {
   height: 70px;
   width: 53px;
-  transform: rotate(18deg);
+  transform: rotate(12deg);
   position: absolute; /*HAS TO HAVE ABSOLUTE!!!!!!!! */
   
 }
@@ -47,11 +47,11 @@ bottom: 0;
 
 }
 
-/*.popper {
+.popper {
   height: 70px;
-  width: 20px;
+  width: 90px;
   background-color: blue;
-}*/
+}
 
 #boat {
   position: absolute;
@@ -87,8 +87,13 @@ bottom: 0;
   background-color: green;
 }
 #pickle {
-  
+  margin-left: 280px;
+  margin-top: -60px;
+  height: 70px;
+  width: 55px;
+  background-color: green;
 }
+
 #{
 
 }

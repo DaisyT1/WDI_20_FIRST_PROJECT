@@ -90,13 +90,23 @@ function collision(balloon, aDIV) {
       var b2 = y2 + h2;
       var r2 = x2 + w2;
         
-      if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return "false";
-      return "true";
+      if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
+      return true;
     }
 
-// ///////////////Collision detection every 2 (200ms) seconds////////////
+// ///////////////Collision detection every 0.2 (200ms) seconds////////////
+// window.setInterval(function() {
+//     console.log(collision($('#balloon'), burst.each));
+// }, 200);
+
+var burst = [$('#pauls'), $('#tall'), $('#wharf')];
+
 window.setInterval(function() {
-    console.log(collision($('#balloon'), $('.pop')));
+      $(burst).each(function(index, element) {
+          if(collision($('#balloon'),  element)) {
+                 console.log("you collided with" , element);
+          }
+      });
 }, 200);
 
 
