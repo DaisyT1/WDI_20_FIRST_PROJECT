@@ -6,7 +6,7 @@ function init() {
     // Down: 40
     // Right: 39
     // Left: 37
-//////////////balloon movement///////////////////
+//////////////BALLOON MOVEMENT///////////////////
 
         var playerMoving = false;
         var playerLeft = false;
@@ -25,8 +25,16 @@ function init() {
             } else if (e.keyCode === 40) {
                 playerDown = true;
             }   
-console.log(e.keyCode)
+                  // console.log(e.keyCode)
           });
+
+
+            while (playerDown === true) {
+              var balloon = $( "#balloon" );
+              var position = balloon.position();
+
+                        console.log(position)
+          }
 
           $(document).keyup(function(e) {
 
@@ -61,10 +69,35 @@ console.log(e.keyCode)
 //======================================           =============================================//
 
 //get balloon coordinates
-    $("#balloon").click(function(e) {
+    $("body").click(function(e) {
          var offset = $(this).offset();
          console.log("X" + (e.pageX - offset.left));
          console.log("Y" + (e.pageY - offset.top));
      });
-            
+//=====================COLLISION DETECTION==============//
+
+function collision(balloon, aDIV) {
+      var x1 = (balloon).offset().left;
+      var y1 = (balloon).offset().top;
+      var h1 = (balloon).outerHeight(true);
+      var w1 = (balloon).outerWidth(true);
+      var b1 = y1 + h1;
+      var r1 = x1 + w1;
+      var x2 = (aDIV).offset().left;
+      var y2 = (aDIV).offset().top;
+      var h2 = (aDIV).outerHeight(true);
+      var w2 = (aDIV).outerWidth(true);
+      var b2 = y2 + h2;
+      var r2 = x2 + w2;
+        
+      if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return "false";
+      return "true";
+    }
+
+// ///////////////Collision detection every 2 (200ms) seconds////////////
+window.setInterval(function() {
+    console.log(collision($('#balloon'), $('.pop')));
+}, 200);
+
+
 }
