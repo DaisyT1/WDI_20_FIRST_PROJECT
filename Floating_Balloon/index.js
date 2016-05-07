@@ -6,9 +6,7 @@ function init() {
     // Down: 40
     // Right: 39
     // Left: 37
-
-
-        $(function(){
+//////////////balloon movement///////////////////
 
         var playerMoving = false;
         var playerLeft = false;
@@ -27,7 +25,7 @@ function init() {
             } else if (e.keyCode === 40) {
                 playerDown = true;
             }   
-
+console.log(e.keyCode)
           });
 
           $(document).keyup(function(e) {
@@ -41,22 +39,6 @@ function init() {
             } else if (e.keyCode === 40) {
                 playerDown = false;
             }   
-          })
-
-          $(document).keydown(function(e) {
-              console.log(e.keyCode);
-
-              // move the balloon by 1 pixel each frame
-              // change this to make it move faster
-              if(playerLeft) {
-              $("#balloon").css({"left" : "-=1px"});
-            } if (playerUp) {
-              $("#balloon").css({"top" : "-=1px"});
-            } if (playerRight) {
-              $("#balloon").css({"left" : "+=1px"});
-            } if (playerDown) {
-              $("#balloon").css({"top" : "+=1px"});
-            }
           });
 
           // create the animation loop every 5ms
@@ -75,5 +57,14 @@ function init() {
             }
       
         }
-    });
+
+//======================================           =============================================//
+
+//get balloon coordinates
+    $("#balloon").click(function(e) {
+         var offset = $(this).offset();
+         console.log("X" + (e.pageX - offset.left));
+         console.log("Y" + (e.pageY - offset.top));
+     });
+            
 }
