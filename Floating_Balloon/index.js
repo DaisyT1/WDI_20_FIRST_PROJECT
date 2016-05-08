@@ -28,9 +28,8 @@ function init() {
                   // console.log(e.keyCode)
           });
 
-
             while (playerDown === true) {
-              var balloon = $( "#balloon" );
+              var balloon = $("#balloon");
               var position = balloon.position();
 
                         console.log(position)
@@ -62,13 +61,23 @@ function init() {
               $("#balloon").css({"left" : "+=1px"});
             } if (playerDown) {
               $("#balloon").css({"top" : "+=1px"});
-            }
-      
+            }    
         }
 
-//======================================           =============================================//
+    //================BALLOON FLOATING EFFECT======================//
 
-//get balloon coordinates
+     
+        //   var balloon = $("#balloon")
+        
+        //     function runIt() {
+        //     balloon.animate({top:'+=15'}, 1000);
+        //     balloon.animate({top:'-=15'}, 1000, runt);
+        // }
+
+        // runIt();
+
+//===============================GET X & Y COORDS===================================//
+
     $("body").click(function(e) {
          var offset = $(this).offset();
          console.log("X" + (e.pageX - offset.left));
@@ -76,17 +85,17 @@ function init() {
      });
 //=====================COLLISION DETECTION==============//
 
-function collision(balloon, aDIV) {
+function collision(balloon, aDiv) {
       var x1 = (balloon).offset().left;
       var y1 = (balloon).offset().top;
       var h1 = (balloon).outerHeight(true);
       var w1 = (balloon).outerWidth(true);
       var b1 = y1 + h1;
       var r1 = x1 + w1;
-      var x2 = (aDIV).offset().left;
-      var y2 = (aDIV).offset().top;
-      var h2 = (aDIV).outerHeight(true);
-      var w2 = (aDIV).outerWidth(true);
+      var x2 = (aDiv).offset().left;
+      var y2 = (aDiv).offset().top;
+      var h2 = (aDiv).outerHeight(true);
+      var w2 = (aDiv).outerWidth(true);
       var b2 = y2 + h2;
       var r2 = x2 + w2;
         
@@ -94,20 +103,35 @@ function collision(balloon, aDIV) {
       return true;
     }
 
-// ///////////////Collision detection every 0.2 (200ms) seconds////////////
-// window.setInterval(function() {
-//     console.log(collision($('#balloon'), burst.each));
-// }, 200);
-
-var burst =  [ $('#tall'), $('#wharf'), $('#pauls'), $('#pickle'), $('#pickle2'), $('#tower'), $('#eye'), $('#bridgeL'), $('#bridgeR'), $('#parliament'), $('#parliament2'), $('#parliament3'), $('#bb'), $('#shard'), $('#shard2')];
+//============detection every 0.2 (200ms) seconds==================//
+///////////////////sort base and add here!!!!!!!!!!!!!!!
+var burstOptions =  [ $('#tall'), $('#wharf'), $('#pauls'), $('#pickle'), $('#pickle2'), $('#tower'), $('#eye'), $('#bridgeL'), $('#bridgeR'), $('#parliament'), $('#parliament2'), $('#parliament3'), $('#bb'), $('#shard'), $('#shard2'), $('#top'), $('#right'), $('#left'), $('.camera')];
 
 window.setInterval(function() {
-      $(burst).each(function(index, element) {
+      $(burstOptions).each(function(index, element) {
           if(collision($('#balloon'),  element)) {
-                 console.log("you collided with" , element);
+                 console.log("collided with" , element);
           }
       });
 }, 200);
+
+//==================insert points to collect================//
+var player1Turn 
+var player2Turn 
+var player1Score = 0;
+var player2Score = 0;
+
+
+
+    $('.camera').delay(6000).queue(function (wait) {
+
+     $(this).append("<img>").css({"display" : "inline"})
+           setTimeout(function() {
+             $('.camera').remove();
+           }, 5000); 
+    });
+       
+
 
 
 }
