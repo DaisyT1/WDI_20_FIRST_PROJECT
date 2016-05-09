@@ -83,6 +83,7 @@ function init() {
 //=====================COLLISION DETECTION==============//
 
 function collision(balloon, aDiv) {
+
       var x1 = (balloon).offset().left;
       var y1 = (balloon).offset().top;
       var h1 = (balloon).outerHeight(true);
@@ -103,10 +104,11 @@ function collision(balloon, aDiv) {
 //============detection every 0.2 (200ms) seconds==================//
 
 window.setInterval(function() {
-  var burstOptions =  [ $('#top'), $('#right'), $('#left'), $('#base'), $(".pop")];
-      $(burstOptions).each(function(index, element) {
-          if(collision($('#balloon'),  element)) {
-                 console.log("hit" , element);
+
+      $(".pop").each(function(index, element) {
+          if(collision($('#balloon'),  $(element))) {
+                 //console.log("hit" , element);
+                 alert("hit");
           }
       });
 }, 100);
@@ -155,7 +157,7 @@ var obstacleTypes = [
         }, {
   "height": 300,
   "width": 300,
-  "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
+  "background-image": "url('http://pad2.whstatic.com/images/thumb/8/83/Draw-a-Plane-Step-9.jpg/aid1437665-728px-Draw-a-Plane-Step-9.jpg')",
           }, {
   "height": 300,
   "width": 300,
@@ -164,7 +166,7 @@ var obstacleTypes = [
             }, {
   "height": 300,
   "width": 300,
-  "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
+  "background-image": "url('http://pad2.whstatic.com/images/thumb/8/83/Draw-a-Plane-Step-9.jpg/aid1437665-728px-Draw-a-Plane-Step-9.jpg')",
   "bottom" : 0,
         }, {
   "height": 300,
@@ -186,17 +188,19 @@ var obstacleTypes = [
     var obstacleNumber = Math.floor(Math.random() * obstacleTypes.length);
     var myObstacle = obstacleTypes[obstacleNumber];
 
-    return myObstacle;
+    obstacleTypes.splice(obstacleNumber , 1);
 
-    // myObstacle.splice(); -- remove this object so it cant be picked again?!
+    console.log(obstacleTypes.length);
+
+    return myObstacle;
 
   }
   
-//========================PUSH ONTO THE PAGE===========================//
+//========================PUSH TO THE PAGE===========================//
 
 function createObstacle(obstacle){
   
-   // for (i = 0 ; i <= obstacleTypes.length; i++) {
+   for (i = 0 ; i <= obstacleTypes.length; i++) {
     
         var newObstacle = $("<div></div>");
 
@@ -206,18 +210,26 @@ function createObstacle(obstacle){
         $(".box").prepend(newObstacle);
         newObstacle.animate({left: -obstacle.width}, 7000 , function(){
         newObstacle.remove() });
-     // }
+     }
 
 }
 
 // createObstacle(pickAnObstacle());
+//================PUSH TO THE PAGE EVERY X SECONDS =============//
 
+function run() {   
 
-setInterval(function(){ 
+var interval = setInterval(function(){
+  if (obstacleTypes.length === 0) {
+    clearInterval(interval);
+    return;
+  }
+  createObstacle(pickAnObstacle())
+ }, 2000);
 
-  createObstacle(pickAnObstacle()) }, 3000);
+}
 
-
+run()
 
 // END OF THE PROGRAM
 }
