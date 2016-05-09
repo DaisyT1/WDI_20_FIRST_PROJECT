@@ -24,14 +24,23 @@ h1, p {
 }
 
 .box {
-/*  background: #87ceeb;*/
-  max-width: 1250px;
-  min-width: 1250px;
+  background: #87ceeb;
+  max-width: 1200px;
+  min-width: 1200px;
   max-height: 500px;
   min-height: 500px;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
+  }
+
+  .pop {
+
+    position: absolute;
+    left: 1200px;
+    background-size:cover;
+    bottom: 0;
+
   }
 
 #balloon {
@@ -43,169 +52,9 @@ h1, p {
   position: absolute; /*HAS TO HAVE ABSOLUTE!!!!!!!! */
 }
 
-#london {
-position: absolute;
-width: 100%;
-left: 0;
-bottom: 0;
-
-}
-
-#tall {
-  position: absolute;
-  top: 90px;
-  height: 60px;
-  width: 35px;
-/*  background-color: purple;*/
-
-}
-
-#wharf{
-  position: absolute;
-  left: 70px;
-  top: 155px;
-  height: 150px;
-  width: 60px;
-/*  background-color: green;
-*/}
-
-#pauls{
-  position: absolute;
-  left: 165px;
-  top: 250px;
-  height: 20px;
-  width: 100px;
-/*  background-color: green;
-*/}
-#pickle {
-  position: absolute;
-  left: 275px;
-  top: 210px;
-  height: 70px;
-  width: 60px;
-/*  background-color: green;
-*/}
-
-#pickle2 {
-  position: absolute;
-  left: 293px;
-  top: 182px;
-  height: 20px;
-  width: 25px;
-/*  background-color: green;
-*/}
-#tower {
-  position: absolute;
-  left: 350px;
-  top: 315px;
-  height: 20px;
-  width: 55px;
-/*  background-color: green;
-*/}
-#eye {
-  position: absolute;
-  left: 420px;
-  top: 240px;
-  height: 90px;
-  width: 100px;
-/*  background-color: green;
-*/
-}
-#bridgeL {
-  position: absolute;
-    left: 490px;
-    top: 275px;
-    height: 110px;
-    width: 80px;
-/*    background-color: green;
-*/  }
-
- #base {
-  position: absolute;
-    left: 0px;
-    top: 345px;
-   height: 40px;
-   width: 500px;
-/*   background-color: pink;
-*/  }
-
-#bridgeR {
-  position: absolute;
-  left: 680px;
-  top: 275px;
-  height: 110px;
-  width: 70px;
-/*  background-color: green;
-*/}
-
-#parliament {
-  position: absolute;
-  left: 730px;
-  top: 260px;
-  height: 120px;
-  width: 50px;
-/*  background-color: pink;
-*/}
-
-#parliament2 {
-  position: absolute;
-  left: 680px;
-  top: 325px;
-  height: 60px;
-  width: 840px;
-/*  background-color: pink;
-*/}
-
-#parliament3 {
-  position: absolute;
-  left: 928px;
-  top: 250px;
-  height: 90px;
-  width: 20px;
-/*  background-color: blue;
-*/}
-
-#bb {
-  position: absolute;
-  left: 1135px;
-  top: 260px;
-  height: 90px;
-  width: 25px;
-/*  background-color: blue;
-*/}
-
-#shard {
-  position: absolute;
-    left: 1165px;
-    top: 40px;
-    height: 300px;
-    width: 20px;
-/*    background-color: blue;
-*/    transform: rotate(5deg);
-  }
-
-#shard2 {
-    position: absolute;
-      left: 1200px;
-      top: 30px;
-      height: 300px;
-      width: 20px;
-/*      background-color: blue;
-*/      transform: rotate(170deg);
-    }
-
-#thames {
-      position: absolute;
-      width: 100%;
-      left: 0;
-      bottom: 0;
-      height: 115px;
-/*      background-color: #20b2aa;*/
-
-    }
-
 #top {
   position: absolute;
+  top: 0;
   left: 0;
   height: 1px;
   width: 100%;
@@ -223,7 +72,7 @@ bottom: 0;
 
  #base {
   position: absolute;
-  top: 499px;
+  top: -500px;
   right: 0;
   width: 100%;
   height: 1px;
