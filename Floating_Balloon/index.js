@@ -110,10 +110,10 @@ var burstOptions =  [ $('#tall'), $('#wharf'), $('#pauls'), $('#pickle'), $('#pi
 window.setInterval(function() {
       $(burstOptions).each(function(index, element) {
           if(collision($('#balloon'),  element)) {
-                 console.log("collided with" , element);
+                 console.log("hit" , element);
           }
       });
-}, 200);
+}, 100);
 
 //==================insert points to collect================//
 var player1Turn 
@@ -123,15 +123,24 @@ var player2Score = 0;
 
 
 
-    $('.camera').delay(6000).queue(function (wait) {
+    $('.camera').delay(2000).slideDown(500).queue(function (wait) {
 
-     $(this).append("<img>").css({"display" : "inline"})
+     $(this).append("<img>").css({"display" : "inline"});
            setTimeout(function() {
              $('.camera').remove();
            }, 5000); 
     });
        
 
+    // function blink(time, interval){
+    //     var timer = window.setInterval(function(){
+    //         $("img").css("opacity", "0.1");
+    //         window.setTimeout(function(){
+    //             $("img").css("opacity", "1");
+    //         }, 100);
+    //     }, interval);
+    //     window.setTimeout(function(){clearInterval(timer);}, time);
+    // }
 
 
 }
