@@ -13,30 +13,24 @@
 <body>
   <div class="container">
 
-    <div id="fancybox1">
-      <h2>P</h2>
-      <p> How you play the game </p>
-      <button id="firstButton"></button>
-    </div>
+    <div id="fancybox1" class="fancybox">
+        <h2>Play Balloon Pop!</h2>
+        <img src="images/hot-air-baloon.gif">
+        <p> Whilst flying high in the sky... avoid the clouds.<br>Use the arrow keys to play.</br></p>
+        <button id="firstButton" class="fancybox">I'm ready!</button>
+    </div>  
     <div id="fancybox2">
-      <h2>Title</h2>
-      <p></p>
-      <button id="firstButton"></button>
+        <h2>GAME OVER!</h2>
+        <p id="fancybox2P"></p>
+        <button id="button2" class="fancybox">Play again</button>
     </div>
-    <div id="fancybox3">
-      <h2>Title</h2>
-      <p></p>
-      <button id="firstButton"></button>
-    </div>
-
     <div class="middleMaker">
-      <h1>Balloon Pop</h1>
+      <h1>Balloon Pop!</h1>
     </div>
     <div class="box">
-      <p class="which-player"></p>
-      <button class="ready">Ready!</button>
       <img src="images/hot-air-baloon.gif" id="balloon">
-
+      <p class="which-player"></p>
+      <button class="ready">Next player, you're up</button>   
       <div id="top"         class="pop"></div>
       <div id="left"        class="pop"></div>
       <div id="base"        class="pop"></div>

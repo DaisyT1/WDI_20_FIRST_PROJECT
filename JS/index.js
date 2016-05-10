@@ -38,7 +38,6 @@ var interval;
 var tooManyHits = false;
 var difficulty = 7000;
 
-
 //===================== OBJECTS OF IMAGES AND SPECIFICATIONS===============//
 
     var obstacleTypes = [
@@ -344,20 +343,38 @@ var whichPlayer;
             player2Score = currentScore;
             gameOver();
           }
-
-        console.log("this is player 1 score :" + player1Score)
       }
 
       // stuff to do when the game is over
       function gameOver() {
         //pauseGame();
+   var winner;
         if (player1Score > player2Score) {
-          alert("Player 1 wins")
+          // alert("Player 1 wins")
+          return "Player 1 wins!";
         } else if (player2Score > player1Score) {
-          alert("player 2 wins")
+          // alert("player 2 wins")
+          return "Player 2 wins!";
         } else { 
-          alert("its a draw");
+          // alert("its a draw");
+          return "It's a draw!";
         }
+        return winner;
+
+        $('#fancybox2').fancybox({
+          'autoDimensions': false,
+          'padding'       : 10,
+          'maxWidth'      : 1200,
+          'autoScale'     : false,
+
+        }).click()
+    
+        $('#fancybox2 #button1').click(function(e) {
+            e.stopPropagation();//targeting the click on fancybox only
+            $.fancybox.close();
+
+          startGame();    
+        });
       }
 
 // END OF THE PROGRAM
