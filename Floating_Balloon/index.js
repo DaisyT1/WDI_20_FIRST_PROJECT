@@ -6,8 +6,75 @@ function init() {
     // Down: 40
     // Right: 39
     // Left: 37
-//////////////BALLOON MOVEMENT///////////////////
 
+//Globals
+var playerScore = 0;
+var playerTurn = false; //true = player1, false = player2
+var player1Score = null;
+var player2Score = null;
+var floatInterval;
+var animateInterval;
+var balloon = $("#balloon");
+var collisionInterval;
+var interval;
+var tooManyHits = false;
+
+//===================== OBJECTS OF IMAGES AND SPECIFICATIONS===============//
+
+    var obstacleTypes = [
+    { "height": 400,
+      "width": 300,
+      "background-image": "url('http://preview.turbosquid.com/Preview/2014/07/10__11_04_03/1.jpg29a3bef4-bdc5-40d3-b98a-55ef46374923Original.jpg')"
+    },
+    { "height": 300,
+      "width": 300,
+      "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
+    }, {
+      "height": 300,
+      "width": 300,
+      "background-image": "url('http://preview.turbosquid.com/Preview/2014/07/10__11_04_03/1.jpg29a3bef4-bdc5-40d3-b98a-55ef46374923Original.jpg')",
+      }, {
+      "height": 300,
+      "width": 300,
+      "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
+        }, {
+      "height": 300,
+      "width": 300,
+      "background-image": "url('http://preview.turbosquid.com/Preview/2014/07/10__11_04_03/1.jpg29a3bef4-bdc5-40d3-b98a-55ef46374923Original.jpg')",
+          }, {
+      "height": 300,
+      "width": 300,
+      "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
+            }, {
+      "height": 300,
+      "width": 300,
+      "background-image": "url('http://pad2.whstatic.com/images/thumb/8/83/Draw-a-Plane-Step-9.jpg/aid1437665-728px-Draw-a-Plane-Step-9.jpg')",
+              }, {
+      "height": 300,
+      "width": 300,
+      "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
+      "bottom" : 0,
+                }, {
+      "height": 300,
+      "width": 300,
+      "background-image": "url('http://pad2.whstatic.com/images/thumb/8/83/Draw-a-Plane-Step-9.jpg/aid1437665-728px-Draw-a-Plane-Step-9.jpg')",
+      "bottom" : 0,
+            }, {
+      "height": 300,
+      "width": 300,
+      "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
+      "bottom" : 0,
+            }, {
+      "height": 100,
+      "width": 150,
+      "background-image": "url('http://pad2.whstatic.com/images/thumb/8/83/Draw-a-Plane-Step-9.jpg/aid1437665-728px-Draw-a-Plane-Step-9.jpg')",
+      "top" : "50px",
+                  }
+  ]; //END OF ARRAY
+
+
+// function run() {
+  //////////////BALLOON MOVEMENT///////////////////
         var playerMoving = false;
         var playerLeft = false;
         var playerUp = false;
@@ -47,31 +114,88 @@ function init() {
                 playerDown = false;
             }   
           });
-
-          // create the animation loop every 5ms
-          // this sets the frame rate of your game
-          var animateInterval = setInterval(animate, 1);
+     
           
-          function animate() {
-              if(playerLeft === true) {
-              $("#balloon").css({"left" : "-=2px"});
-            } if (playerUp) {
-              $("#balloon").css({"top" : "-=2px"});
-            } if (playerRight) {
-              $("#balloon").css({"left" : "+=2px"});
-            } if (playerDown) {
-              $("#balloon").css({"top" : "+=2px"});
-            }    
-        }
+
+      
+  function startGame() {
+            
+   // create the animation loop every 5ms for balloon movement
+          
+            var animateInterval = setInterval(animate, 3);
+              
+              function animate() {
+                  if(playerLeft === true) {
+                  $("#balloon").css({"left" : "-=1px"});
+                } if (playerUp) {
+                  $("#balloon").css({"top" : "-=2px"});
+                } if (playerRight) {
+                  $("#balloon").css({"left" : "+=1px"});
+                } if (playerDown) {
+                  $("#balloon").css({"top" : "+=1px"});
+                }    
+            }
 
     //================BALLOON FLOATING EFFECT======================//
 
-     
-          // var balloon = $("#balloon")
+              var floatInterval = setInterval(function() {
+                balloon.css({ top:'+=1'}, 3)
+              });
+          
+    //============collision detection every 0.2 (200ms) seconds==================//
 
-          // setInterval(function() {
-          //   balloon.css({ top:'+=1'}, 2000)
-          // })
+              var collisionInterval = window.setInterval(function() {
+
+                    $(".pop").each(function(index, element) {
+                        if(!$("#balloon").hasClass("hit") && collision($('#balloon'),  $(element))) {
+                          playerScore++;
+                          console.log(playerScore);
+                          
+                          balloon.addClass('hit');
+                          setTimeout(function(){
+                            balloon.removeClass('hit');
+                          },2500);
+
+                          console.log("the balloon has class " +balloon.hasClass('hit'));
+                          console.log("the player score is" +playerScore);
+                          // check for player game over
+                          if (playerScore === 3) {
+                            stopGame();
+                          }
+                        }
+                    });
+                    //console.log("the player score is " + playerScore);
+
+
+              }, 200);
+
+    //=======PUSH IMAGE PAGE EVERY X SECONDS PASSING IN createObstacle ======//
+                 
+              var interval = setInterval(function(){
+                if (obstacleTypes.length === 0) {
+                  clearInterval(interval);
+                  return;
+                }
+                createObstacle(pickAnObstacle())
+               }, 2000);
+              console.log()
+
+          }
+
+
+
+          function stopGame() {
+
+              clearInterval(animateInterval);
+              clearInterval(floatInterval);
+              clearInterval(collisionInterval)
+              clearInterval(interval)
+          
+          }
+
+
+
+          //stopGame()
 
 //===============================GET X & Y COORDS===================================//
 
@@ -101,25 +225,8 @@ function collision(balloon, aDiv) {
       return true;
     }
 
-//============detection every 0.2 (200ms) seconds==================//
 
-window.setInterval(function() {
-
-      $(".pop").each(function(index, element) {
-          if(collision($('#balloon'),  $(element))) {
-                 //console.log("hit" , element);
-                 alert("hit");
-          }
-      });
-}, 100);
-
-//==================insert points to collect================//
-var player1Turn 
-var player2Turn 
-var player1Score = 0;
-var player2Score = 0;
-
-
+//==================random displays================//
 
     $('.camera').delay(2000).slideDown(500).queue(function (wait) {
 
@@ -129,59 +236,7 @@ var player2Score = 0;
            }, 5000); 
     });
 
-    //=====================OBJECT OF IMAGES AND SPECIFICATIONS===============//
-var obstacleTypes = [
-{ "height": 400,
-  "width": 300,
-  "background-image": "url('http://preview.turbosquid.com/Preview/2014/07/10__11_04_03/1.jpg29a3bef4-bdc5-40d3-b98a-55ef46374923Original.jpg')"
-},
-{ "height": 300,
-  "width": 300,
-  "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
-}, {
-  "height": 300,
-  "width": 300,
-  "background-image": "url('http://preview.turbosquid.com/Preview/2014/07/10__11_04_03/1.jpg29a3bef4-bdc5-40d3-b98a-55ef46374923Original.jpg')",
-  }, {
-  "height": 300,
-  "width": 300,
-  "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
-    }, {
-  "height": 300,
-  "width": 300,
-  "background-image": "url('http://preview.turbosquid.com/Preview/2014/07/10__11_04_03/1.jpg29a3bef4-bdc5-40d3-b98a-55ef46374923Original.jpg')",
-      }, {
-  "height": 300,
-  "width": 300,
-  "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
-        }, {
-  "height": 300,
-  "width": 300,
-  "background-image": "url('http://pad2.whstatic.com/images/thumb/8/83/Draw-a-Plane-Step-9.jpg/aid1437665-728px-Draw-a-Plane-Step-9.jpg')",
-          }, {
-  "height": 300,
-  "width": 300,
-  "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
-  "bottom" : 0,
-            }, {
-  "height": 300,
-  "width": 300,
-  "background-image": "url('http://pad2.whstatic.com/images/thumb/8/83/Draw-a-Plane-Step-9.jpg/aid1437665-728px-Draw-a-Plane-Step-9.jpg')",
-  "bottom" : 0,
-        }, {
-  "height": 300,
-  "width": 300,
-  "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
-  "bottom" : 0,
-        }, {
-  "height": 100,
-  "width": 150,
-  "background-image": "url('http://pad2.whstatic.com/images/thumb/8/83/Draw-a-Plane-Step-9.jpg/aid1437665-728px-Draw-a-Plane-Step-9.jpg')",
-  "top" : "50px",
-                  }
-  ]; //END OF ARRAY
-
-  //==============GET A RANDOM OBJECT OUT OF THE ARRAY - pass to createObstacle ================//
+//==============GET A RANDOM OBJECT OUT OF THE ARRAY - pass to createObstacle ================//
 
   function pickAnObstacle(){
 
@@ -197,6 +252,7 @@ var obstacleTypes = [
   }
   
 //========================PUSH TO THE PAGE===========================//
+////////obsticleType passed into createObtacless in get random//////
 
 function createObstacle(obstacle){
   
@@ -215,21 +271,59 @@ function createObstacle(obstacle){
 }
 
 // createObstacle(pickAnObstacle());
-//================PUSH TO THE PAGE EVERY X SECONDS =============//
 
-function run() {   
 
-var interval = setInterval(function(){
-  if (obstacleTypes.length === 0) {
-    clearInterval(interval);
-    return;
+function playTheGame() {
+  ////////append player turn to box and click play//////
+  $(".box").on("click" , function(){
+    // console.log(playerTurn)
+    playerTurn = true; //player 1 go
+    if (playerTurn === true){
+      startGame();
+if (playerScore) {
+  stopGame();
+}
+      
+      // pass to player 2;
+
+    playerTurn = false;
+    player1Score = playerScore;
+    playerScore = 0;
+} 
+
+  if (playerTurn === false) {
+    /////////append which player to the screen & click
+        playTheGame()
+        //loop
+        if (playerScore===3) {
+          stopGame()
+        }
+
   }
-  createObstacle(pickAnObstacle())
- }, 2000);
+    playerTurn = true;
+    player2Score = playerScore;
+    playerScore = 0;
+    
+  })
+}
+
+playTheGame()
+
+console.log("player1score is" + player1Score)
+
+function whoHasWon(){
+  if (player1Score > player2Score) {
+    console.log("Player 2 wins")
+  } else if (player2Score > player1Score) {
+    console.log("player 1 wins")
+  } else { 
+    console.log("its a draw")
+  }
+
+  playerScore = 0;
 
 }
 
-run()
 
 // END OF THE PROGRAM
 }
