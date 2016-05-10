@@ -2,6 +2,23 @@ $(init);
 
 function init() {
 
+  $('.ready').hide();
+
+
+  $('#fancybox1').fancybox({
+    'autoDimensions': false,
+    'padding'       : 10,
+    'maxWidth'      : 1200,
+    'autoScale'     : false,
+  }).click()
+
+  $('#fancybox1 button').click(function(e) {
+    e.stopPropagation();//targeting the click on fancybox only
+    $.fancybox.close();
+
+    startGame();    
+  });
+
     // Up: 38
     // Down: 40
     // Right: 39
@@ -25,56 +42,52 @@ var difficulty = 7000;
 //===================== OBJECTS OF IMAGES AND SPECIFICATIONS===============//
 
     var obstacleTypes = [
-    { "height": 400,
-      "width": 300,
-      "background-image": "url('http://preview.turbosquid.com/Preview/2014/07/10__11_04_03/1.jpg29a3bef4-bdc5-40d3-b98a-55ef46374923Original.jpg')"
-    },
-    { "height": 300,
-      "width": 300,
-      "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
+    { "height": 150,
+      "width": 250,
+      "background-image": "url('../WDI_20_FIRST_PROJECT/images/cloud1.png')",
+      "bottom" : 0,
     }, {
-      "height": 300,
+      "height": 200,
+      "width": 350,
+      "background-image": "url('../WDI_20_FIRST_PROJECT/images/cloud3.png')",
+      "bottom" : 0,
+      }, { 
+      "height": 200,
       "width": 300,
-      "background-image": "url('http://preview.turbosquid.com/Preview/2014/07/10__11_04_03/1.jpg29a3bef4-bdc5-40d3-b98a-55ef46374923Original.jpg')",
+      "background-image": "url('../WDI_20_FIRST_PROJECT/images/cloud2.png')",
+      "bottom" : "50px",
+    }, {
+      "height": 150,
+      "width": 300,
+      "background-image": "url('../WDI_20_FIRST_PROJECT/images/cloud6.png')",
+      "bottom" : "80px",
+            },{
+      "height": 170,
+      "width": 300,
+      "background-image": "url('../WDI_20_FIRST_PROJECT/images/cloud3.png')",
+      "bottom" : "130px",
       }, {
-      "height": 300,
-      "width": 300,
-      "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
+      "height": 250,
+      "width": 350,
+      "background-image": "url('../WDI_20_FIRST_PROJECT/images/cloud1.png')",
+      "bottom" : "160px",
         }, {
-      "height": 300,
-      "width": 300,
-      "background-image": "url('http://preview.turbosquid.com/Preview/2014/07/10__11_04_03/1.jpg29a3bef4-bdc5-40d3-b98a-55ef46374923Original.jpg')",
+      "height": 200,
+      "width": 400,
+      "background-image": "url('../WDI_20_FIRST_PROJECT/images/cloud5.png')",
+      "bottom" : "180px",
           }, {
-      "height": 300,
-      "width": 300,
-      "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
+      "height": 200,
+      "width": 500,
+      "background-image": "url('../WDI_20_FIRST_PROJECT/images/cloud6.png')",
+      "bottom" : "260px",
             }, {
-      "height": 300,
-      "width": 300,
-      "background-image": "url('http://pad2.whstatic.com/images/thumb/8/83/Draw-a-Plane-Step-9.jpg/aid1437665-728px-Draw-a-Plane-Step-9.jpg')",
-              }, {
-      "height": 300,
-      "width": 300,
-      "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
-      "bottom" : 0,
-                }, {
-      "height": 300,
-      "width": 300,
-      "background-image": "url('http://pad2.whstatic.com/images/thumb/8/83/Draw-a-Plane-Step-9.jpg/aid1437665-728px-Draw-a-Plane-Step-9.jpg')",
-      "bottom" : 0,
-            }, {
-      "height": 300,
-      "width": 300,
-      "background-image": "url('http://www.wallquotes.com/sites/default/files/styles/uc_canvas/public/arts0018-80.png?itok=rIdlshah')",
-      "bottom" : 0,
-            }, {
-      "height": 100,
-      "width": 150,
-      "background-image": "url('http://pad2.whstatic.com/images/thumb/8/83/Draw-a-Plane-Step-9.jpg/aid1437665-728px-Draw-a-Plane-Step-9.jpg')",
-      "top" : "50px",
-                  }
+      "height": 45,
+      "width": 57,
+      "background-image": "url('../WDI_20_FIRST_PROJECT/images/sheep.png')",
+      "bottom" : "100px",
+                }
   ]; //END OF ARRAY
-
 
   //////////////BALLOON MOVEMENT///////////////////
   var playerMoving = false;
@@ -85,11 +98,11 @@ var difficulty = 7000;
 
   // start the game
   ////////append player turn to box and click play//////
-  $(".box").one("click" , function(){
+  // $(".box").one("click" , function(){
     
-      startGame();
+  //     startGame();
 
-  });
+  // });
 
   function createKeyListeners() {
 
@@ -192,11 +205,22 @@ function createObstacle(obstacle){
 
 }
 
+var whichPlayer;
+
 // createObstacle(pickAnObstacle());
 
   function startGame() {
-  
-    playerTurn ? alert("Player 1 turn") : alert("Player 2 turn");
+
+    // playerTurn ? alert("Player 1 turn") : alert("Player 2 turn");
+    playerTurn ? whichPlayer = "Player 1 turn" : whichPlayer = "Player 2 turn";
+
+    $('.ready').hide();
+
+   $('.which-player').html(whichPlayer);
+
+   setTimeout(function() {
+    $('.which-player').html("");
+   }, 1000);
 
     reset();
     createKeyListeners();
@@ -237,7 +261,7 @@ function createObstacle(obstacle){
                   $("#balloon").css({"left" : "+=1px"});
                 } if (playerDown) {
                   $("#balloon").css({"top" : "+=1px"});
-                }    
+                } 
             }
 
   //================BALLOON FLOATING EFFECT======================//
@@ -249,6 +273,14 @@ function createObstacle(obstacle){
    //============collision detection every 0.2 (200ms) seconds==================//
 
           collisionInterval = window.setInterval(function() {
+
+            var balloonX = (balloon).offset().left;
+            var balloonY = (balloon).offset().top;
+
+            if (balloonY > 510 || balloonY < 0 || balloonX > 1200 || balloonX < 0) {
+              nextRound();
+            } 
+
 
                   $(".pop").each(function(index, element) {
                       if(!$("#balloon").hasClass("hit") && collision($('#balloon'),  $(element))) {
@@ -263,6 +295,7 @@ function createObstacle(obstacle){
                         if (livesLost === 3) {
                           nextRound();
                         }
+                        console.log($(element))
                       }
                   });
                   //console.log("the player score is " + playerScore);
@@ -303,21 +336,16 @@ function createObstacle(obstacle){
           if (playerTurn === true) {
             playerTurn = !playerTurn; 
             player1Score = currentScore;
-            startGame();
+            $('.ready').show();
+            $('.ready').click(function(){
+              startGame();
+            })
           } else {
             player2Score = currentScore;
             gameOver();
           }
 
         console.log("this is player 1 score :" + player1Score)
-          // if player1 turn player1 score = currentscore
-          // reset current score
-          // change to player 2
-          // update the screen 
-          // start the next round
-
-          // if player 2 same as above except now it's game over
-          // show game over screen
       }
 
       // stuff to do when the game is over
@@ -331,7 +359,6 @@ function createObstacle(obstacle){
           alert("its a draw");
         }
       }
-
 
 // END OF THE PROGRAM
 }
