@@ -184,7 +184,7 @@ function createObstacle(obstacle){
         var newObstacle = $("<div></div>");
 
         newObstacle.css(obstacle);
-        newObstacle.addClass("pop obstacle");
+        newObstacle.addClass("pop");
 
         $(".box").prepend(newObstacle);
         newObstacle.animate({left: -obstacle.width}, difficulty , function(){
@@ -207,7 +207,7 @@ function createObstacle(obstacle){
   function reset() {
 
     // reset the balloon
-    $("#ballon").css({top:"80px" , "left" : "150px"});
+    $("#balloon").css({top:"80px" , "left" : "150px"});
 
     playerLeft = false;
     playerUp = false;
@@ -298,17 +298,17 @@ function createObstacle(obstacle){
     function nextRound() {
 
           pauseGame();
-          $(".obstacle").remove();
+          $(".pop").remove();
           // alert(playerTurn);
           if (playerTurn === true) {
-            
+            playerTurn = !playerTurn; 
             player1Score = currentScore;
             startGame();
           } else {
             player2Score = currentScore;
             gameOver();
           }
-          playerTurn = !playerTurn; 
+
         console.log("this is player 1 score :" + player1Score)
           // if player1 turn player1 score = currentscore
           // reset current score
