@@ -8,8 +8,9 @@ function init() {
     // Left: 37
 
 //Globals
-var playerScore = 0;
-var playerTurn = false; //true = player1, false = player2
+var livesLost = 0;
+var playerTurn = true; //true = player1, false = player2
+var currentScore = 0;
 var player1Score = null;
 var player2Score = null;
 var floatInterval;
@@ -18,6 +19,8 @@ var balloon = $("#balloon");
 var collisionInterval;
 var interval;
 var tooManyHits = false;
+var difficulty = 7000;
+
 
 //===================== OBJECTS OF IMAGES AND SPECIFICATIONS===============//
 
@@ -75,11 +78,16 @@ var tooManyHits = false;
 
 // function run() {
   //////////////BALLOON MOVEMENT///////////////////
-        var playerMoving = false;
-        var playerLeft = false;
-        var playerUp = false;
-        var playerRight = false;
-        var playerDown = false;
+  var playerMoving = false;
+  var playerLeft = false;
+  var playerUp = false;
+  var playerRight = false;
+  var playerDown = false;
+
+  // start the game
+  startGame();
+
+  function createKeyListeners() {
 
           $(document).keydown(function(e) {
 
@@ -95,12 +103,6 @@ var tooManyHits = false;
                   // console.log(e.keyCode)
           });
 
-            while (playerDown === true) {
-              var balloon = $("#balloon");
-              var position = balloon.position();
-
-                        console.log(position)
-          }
 
           $(document).keyup(function(e) {
 
@@ -115,14 +117,14 @@ var tooManyHits = false;
             }   
           });
      
-          
+  }    
 
       
-  function startGame() {
+  function startRender() {
             
    // create the animation loop every 5ms for balloon movement
           
-            var animateInterval = setInterval(animate, 3);
+            animateInterval = setInterval(animate, 3);
               
               function animate() {
                   if(playerLeft === true) {
@@ -138,29 +140,26 @@ var tooManyHits = false;
 
     //================BALLOON FLOATING EFFECT======================//
 
-              var floatInterval = setInterval(function() {
+              floatInterval = setInterval(function() {
                 balloon.css({ top:'+=1'}, 3)
               });
           
     //============collision detection every 0.2 (200ms) seconds==================//
 
-              var collisionInterval = window.setInterval(function() {
+              collisionInterval = window.setInterval(function() {
 
                     $(".pop").each(function(index, element) {
                         if(!$("#balloon").hasClass("hit") && collision($('#balloon'),  $(element))) {
-                          playerScore++;
-                          console.log(playerScore);
+                          livesLost++;
                           
                           balloon.addClass('hit');
                           setTimeout(function(){
                             balloon.removeClass('hit');
                           },2500);
 
-                          console.log("the balloon has class " +balloon.hasClass('hit'));
-                          console.log("the player score is" +playerScore);
                           // check for player game over
-                          if (playerScore === 3) {
-                            stopGame();
+                          if (livesLost === 3) {
+                            nextRound();
                           }
                         }
                     });
@@ -171,27 +170,67 @@ var tooManyHits = false;
 
     //=======PUSH IMAGE PAGE EVERY X SECONDS PASSING IN createObstacle ======//
                  
-              var interval = setInterval(function(){
-                if (obstacleTypes.length === 0) {
-                  clearInterval(interval);
-                  return;
-                }
+          interval = setInterval(function(){
+                // the player gets a point for every new obstacle
+                currentScore++;
+                difficulty -= 100;
                 createObstacle(pickAnObstacle())
-               }, 2000);
-              console.log()
-
-          }
+          }, 2000);
 
 
+    }
 
-          function stopGame() {
 
-              clearInterval(animateInterval);
-              clearInterval(floatInterval);
-              clearInterval(collisionInterval)
-              clearInterval(interval)
-          
-          }
+
+    function pauseGame() {
+
+
+        clearInterval(animateInterval);
+        clearInterval(floatInterval);
+        clearInterval(collisionInterval);
+        clearInterval(interval);
+        $(document).off("keyup" , "**");
+        $(document).off("keydown" , "**");
+      
+
+    }
+
+    function nextRound() {
+
+        pauseGame();
+        $(".pop").remove();
+
+        console.log("Hoooraaay! you got " + currentScore);
+        if (playerTurn === true) {
+          currentScore = player1Score;
+        
+        currentScore = 0;
+      }
+        // if player1 turn player1 score = currentscore
+        // reset current score
+        // change to player 2
+        // update the screen 
+        // start the next round
+        else if (playerTurn === false); {
+          currentscore = player2Score;
+
+          currentScore = 0;
+        }
+        // if player 2 same as above except now it's game over
+        // show game over screen
+
+        playerTurn = !playerTurn;
+        console.log("player 2 go");
+        console.log(player1Score)
+
+    }
+
+    // stuff to do when the game is over
+    function gameOver() {
+
+        
+
+    }
 
 
 
@@ -228,13 +267,13 @@ function collision(balloon, aDiv) {
 
 //==================random displays================//
 
-    $('.camera').delay(2000).slideDown(500).queue(function (wait) {
+    // $('.camera').delay(2000).slideDown(500).queue(function (wait) {
 
-     $(this).append("<img>").css({"display" : "inline"});
-           setTimeout(function() {
-             $('.camera').remove();
-           }, 5000); 
-    });
+    //  $(this).append("<img>").css({"display" : "inline"});
+    //        setTimeout(function() {
+    //          $('.camera').remove();
+    //        }, 5000); 
+    // });
 
 //==============GET A RANDOM OBJECT OUT OF THE ARRAY - pass to createObstacle ================//
 
@@ -243,9 +282,9 @@ function collision(balloon, aDiv) {
     var obstacleNumber = Math.floor(Math.random() * obstacleTypes.length);
     var myObstacle = obstacleTypes[obstacleNumber];
 
-    obstacleTypes.splice(obstacleNumber , 1);
+    //obstacleTypes.splice(obstacleNumber , 1);
 
-    console.log(obstacleTypes.length);
+    //console.log(obstacleTypes.length);
 
     return myObstacle;
 
@@ -256,7 +295,7 @@ function collision(balloon, aDiv) {
 
 function createObstacle(obstacle){
   
-   for (i = 0 ; i <= obstacleTypes.length; i++) {
+   
     
         var newObstacle = $("<div></div>");
 
@@ -264,65 +303,57 @@ function createObstacle(obstacle){
         newObstacle.addClass("pop");
 
         $(".box").prepend(newObstacle);
-        newObstacle.animate({left: -obstacle.width}, 7000 , function(){
+        newObstacle.animate({left: -obstacle.width}, difficulty , function(){
         newObstacle.remove() });
-     }
+  
 
 }
 
 // createObstacle(pickAnObstacle());
 
 
-function playTheGame() {
+function startGame() {
+
+
   ////////append player turn to box and click play//////
-  $(".box").on("click" , function(){
-    // console.log(playerTurn)
-    playerTurn = true; //player 1 go
-    if (playerTurn === true){
-      startGame();
-if (playerScore) {
-  stopGame();
-}
-      
-      // pass to player 2;
-
-    playerTurn = false;
-    player1Score = playerScore;
-    playerScore = 0;
-} 
-
-  if (playerTurn === false) {
-    /////////append which player to the screen & click
-        playTheGame()
-        //loop
-        if (playerScore===3) {
-          stopGame()
-        }
-
-  }
-    playerTurn = true;
-    player2Score = playerScore;
-    playerScore = 0;
+  $(".box").one("click" , function(){
     
-  })
-}
+    console.log('starting game');
+    createKeyListeners();
+    startRender();
 
-playTheGame()
+  });
 
-console.log("player1score is" + player1Score)
+    // if (playerTurn === false) {
+    //   /////////append which player to the screen & click
+    //       playTheGame()
+    //       //loop
+    //       if (playerScore === 3) {
+    //         stopGame()
+    //       }
 
-function whoHasWon(){
-  if (player1Score > player2Score) {
-    console.log("Player 2 wins")
-  } else if (player2Score > player1Score) {
-    console.log("player 1 wins")
-  } else { 
-    console.log("its a draw")
+    // }
+    //   playerTurn = true;
+    //   player2Score = playerScore;
+    //   playerScore = 0;
+    //   whoHasWon();
+    // })
   }
 
-  playerScore = 0;
+  function whoHasWon(){
+    if (player1Score > player2Score) {
+      console.log("Player 2 wins")
+    } else if (player2Score > player1Score) {
+      console.log("player 1 wins")
+    } else { 
+      console.log("its a draw")
+    }
+    playerScore = 0;
+    player1Score = 0;
+    playerScore = 0;
+    playTheGame();
 
-}
+  }
 
 
 // END OF THE PROGRAM
