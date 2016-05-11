@@ -84,7 +84,7 @@ var whichPlayer;
             }, {
       "height": 45,
       "width": 57,
-      "background-image": "url('images/sheep.png')",
+      "background-image": "url('images/sheep1.png')",
       "bottom" : "100px",
                 }
   ]; //END OF ARRAY
@@ -324,7 +324,7 @@ function createObstacle(obstacle){
           winner = "It's a draw!"
         }  
 
-        $("#fancybox2P").html("The results are in. The winner was: " + winner);
+        $("#fancybox2P").html("The results are in. The winner was: <br>" + winner + "</br>");
         $("#fancybox2").fancybox().click();
     
           $('#fancybox2 #button2').click(function(e) {
