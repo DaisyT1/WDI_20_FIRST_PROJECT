@@ -37,6 +37,7 @@ var collisionInterval;
 var interval;
 var tooManyHits = false;
 var difficulty = 7000;
+var whichPlayer;
 
 //===================== OBJECTS OF IMAGES AND SPECIFICATIONS===============//
 
@@ -95,13 +96,6 @@ var difficulty = 7000;
   var playerRight = false;
   var playerDown = false;
 
-  // start the game
-  ////////append player turn to box and click play//////
-  // $(".box").one("click" , function(){
-    
-  //     startGame();
-
-  // });
 
   function createKeyListeners() {
 
@@ -116,7 +110,7 @@ var difficulty = 7000;
             } else if (e.keyCode === 40) {
                 playerDown = true;
             }   
-                  // console.log(e.keyCode)
+          
           });
 
 
@@ -134,14 +128,7 @@ var difficulty = 7000;
           });
      
   }    
- 
-//===============================GET X & Y COORDS===================================//
 
-    // $("body").click(function(e) {
-    //      var offset = $(this).offset();
-    //      console.log("X" + (e.pageX - offset.left));
-    //      console.log("Y" + (e.pageY - offset.top));
-    //  });
 //=====================COLLISION DETECTION==============//
 
 function collision(balloon, aDiv) {
@@ -163,26 +150,12 @@ function collision(balloon, aDiv) {
       return true;
     }
 
-//==================random displays================//
-
-    // $('.camera').delay(2000).slideDown(500).queue(function (wait) {
-
-    //  $(this).append("<img>").css({"display" : "inline"});
-    //        setTimeout(function() {
-    //          $('.camera').remove();
-    //        }, 5000); 
-    // });
-
 //==============GET A RANDOM OBJECT OUT OF THE ARRAY - pass to createObstacle ================//
 
   function pickAnObstacle(){
 
     var obstacleNumber = Math.floor(Math.random() * obstacleTypes.length);
     var myObstacle = obstacleTypes[obstacleNumber];
-
-    //obstacleTypes.splice(obstacleNumber , 1);
-
-    //console.log(obstacleTypes.length);
 
     return myObstacle;
 
@@ -204,13 +177,9 @@ function createObstacle(obstacle){
 
 }
 
-var whichPlayer;
-
-// createObstacle(pickAnObstacle());
 
   function startGame() {
 
-    // playerTurn ? alert("Player 1 turn") : alert("Player 2 turn");
     playerTurn ? whichPlayer = "Good luck player 1" : whichPlayer = "Good Luck player 2";
 
     $('.ready').hide();
@@ -294,11 +263,8 @@ var whichPlayer;
                         if (livesLost === 3) {
                           nextRound();
                         }
-                        console.log($(element))
                       }
                   });
-                  //console.log("the player score is " + playerScore);
-
 
             }, 200);
 
@@ -307,7 +273,6 @@ var whichPlayer;
           interval = setInterval(function(){
                 // the player gets a point for every new obstacle
                 currentScore++;
-                console.log(currentScore);
                 difficulty -= 100;
                 createObstacle(pickAnObstacle())
           }, 2000);
@@ -331,7 +296,7 @@ var whichPlayer;
 
           pauseGame();
           $(".pop").remove();
-          // alert(playerTurn);
+
           if (playerTurn === true) {
             playerTurn = !playerTurn; 
             player1Score = currentScore;
@@ -347,7 +312,7 @@ var whichPlayer;
       var winner;
       // stuff to do when the game is over
       function gameOver() {
-        //pauseGame();
+ 
         if (player1Score > player2Score) {
           // alert("Player 1 wins")
           winner = "Player 1 wins!";
@@ -357,29 +322,16 @@ var whichPlayer;
         } else { 
           // alert("its a draw")
           winner = "It's a draw!"
-        }
-   
-
-        console.log(winner);
+        }  
 
         $("#fancybox2P").html("The results are in. The winner was: " + winner);
         $("#fancybox2").fancybox().click();
-
-
-      //   $('#fancybox2').fancybox({
-      //     'autoDimensions': false,
-      //     'padding'       : 10,
-      //     'maxWidth'      : 1200,
-      //     'autoScale'     : false,
-
-      //   }).click()
     
           $('#fancybox2 #button2').click(function(e) {
              e.stopPropagation();//targeting the click on fancybox only
              location.reload();
 
            });
-      // }
     }
 
 // END OF THE PROGRAM
