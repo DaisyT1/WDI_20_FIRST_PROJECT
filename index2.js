@@ -43,47 +43,47 @@ var difficulty = 7000;
     var obstacleTypes = [
     { "height": 150,
       "width": 250,
-      "background-image": "url('images/cloud1.png')",
+      "background-image": "url('../images/cloud1.png')",
       "bottom" : 0,
     }, {
       "height": 200,
       "width": 350,
-      "background-image": "url('images/cloud3.png')",
+      "background-image": "url('../images/cloud3.png')",
       "bottom" : 0,
       }, { 
       "height": 200,
       "width": 300,
-      "background-image": "url('images/cloud2.png')",
+      "background-image": "url('../images/cloud2.png')",
       "bottom" : "50px",
     }, {
       "height": 150,
       "width": 300,
-      "background-image": "url('images/cloud6.png')",
+      "background-image": "url('../images/cloud6.png')",
       "bottom" : "80px",
             },{
       "height": 170,
       "width": 300,
-      "background-image": "url('images/cloud3.png')",
+      "background-image": "url('../images/cloud3.png')",
       "bottom" : "130px",
       }, {
       "height": 250,
       "width": 350,
-      "background-image": "url('images/cloud1.png')",
+      "background-image": "url('../images/cloud1.png')",
       "bottom" : "160px",
         }, {
       "height": 200,
       "width": 400,
-      "background-image": "url('images/cloud5.png')",
+      "background-image": "url('../images/cloud5.png')",
       "bottom" : "180px",
           }, {
       "height": 200,
       "width": 500,
-      "background-image": "url('images/cloud6.png')",
+      "background-image": "url('../images/cloud6.png')",
       "bottom" : "260px",
             }, {
       "height": 45,
       "width": 57,
-      "background-image": "url('images/sheep.png')",
+      "background-image": "url('../images/sheep.png')",
       "bottom" : "100px",
                 }
   ]; //END OF ARRAY
